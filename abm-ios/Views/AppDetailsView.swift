@@ -22,28 +22,27 @@ struct AppDetailsView: View {
     
     var body: some View {
         if isServerResponded && isRetrievedAppImage {
-            ScrollView {
-                Image(uiImage: appImage).resizable().scaledToFit()
-                VStack {
-                    Spacer()
-                    Text(appDescription).padding(.all).lineLimit(99)
-                    List() {
+            VStack {
+                Image(uiImage: appImage).resizable().frame(width: UIScreen.main.bounds.width, height: CGFloat(UIScreen.main.bounds.width * 0.6))
+                Text(appDescription).fixedSize(horizontal: false, vertical: true).padding(.all)
+                List {
+                    // Status indicator
+                    HStack {
+                        Text("Status")
+                        Spacer()
+                        Text(supportStatus)
+                    }
+                    // Link to utilized skills
+                    NavigationLink(destination: AssociatedSkillsView(skillCodes: associatedSkillCodes)) {
                         HStack {
-                            Text("Status")
+                            Text("Skills Employed")
                             Spacer()
-                            Text(supportStatus)
-                        }
-                        NavigationLink(destination: AssociatedSkillsView(skillCodes: associatedSkillCodes)) {
-                            HStack {
-                                Text("Skills Employed")
-                                Spacer()
-                                Text(String(associatedSkillCodes.count))
-                            }
+                            Text(String(associatedSkillCodes.count))
                         }
                     }
                 }
-                .navigationTitle(appTitle)
             }
+            .navigationTitle(appTitle)
         } else {
             ProgressView()
             .onAppear() {

@@ -18,17 +18,15 @@ struct ApplicationsView: View {
             if isServerResponded {
                 List(applications, id: \.self) { application in
                     HStack() {
-                        NavigationLink(destination: AppDetailsView(appId: application._idFlat)) {
-                            Text(application.title)
-                            Spacer()
-                            if application.is_featured {
-                                Image(systemName: "star.fill")
-                                    .foregroundColor(.pink)
-                            } else {
-                                Image(systemName: "star")
-                                    .foregroundColor(.pink)
-                            }
+                        if application.is_featured {
+                            Image(systemName: "star.fill")
+                                .foregroundColor(.pink)
+                        } else {
+                            Image(systemName: "star")
+                                .foregroundColor(.pink)
                         }
+                        NavigationLink(destination: AppDetailsView(appId: application._idFlat)) {
+                            Text(application.title)                        }
                     }
                 }
                 .navigationTitle("Applications")
